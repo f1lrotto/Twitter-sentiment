@@ -20,11 +20,15 @@ function caluclateSentiment(sentimentArray) {
   for (let i = 0; i < sentimentArray.length; i++) {
     sum += sentimentArray[i];
   }
-  console.log(`Overall sentiment number: ${sum}` );
-  if (sum >= 1) {
+  console.log(`Overall sentiment number: ${sum}`);
+  if (sum >= 4) {
     return 1;
-  } else if (sum == 0) {
+  } else if (sum >= 1) {
+    return 2;
+  } else if (sum <= -4) {
     return -1;
+  } else if (sum <= -1) {
+    return -2;
   } else {
     return 0;
   }
@@ -32,11 +36,15 @@ function caluclateSentiment(sentimentArray) {
 
 function generateSentimentJSON(sentimentNumber, keyword) {
   if (sentimentNumber == -1) {
-    sentimentWords = `The general sentiment on twitter about #${keyword} is negative`;
-  } else if (sentimentNumber == 0) {
-    sentimentWords = `The general sentiment on twitter about #${keyword} is neutral`;
+    sentimentWords = `The general sentiment on twitter about ${keyword} is negative`;
+  } else if (sentimentNumber == -2) {
+    sentimentWords = `The general sentiment on twitter about ${keyword} is very negative`;
+  } else if (sentimentNumber == 1) {
+    sentimentWords = `The general sentiment on twitter about ${keyword} is positive`;
+  } else if (sentimentNumber == 2) {
+    sentimentWords = `The general sentiment on twitter about ${keyword} is very positive`;
   } else {
-    sentimentWords = `The general sentiment on twitter about #${keyword} is positive`;
+    sentimentWords = `The general sentiment on twitter about ${keyword} is neutral`;
   }
 
   const JSON = {
@@ -52,8 +60,8 @@ function generateSentimentJSON(sentimentNumber, keyword) {
 // TODO customize to the twitter API output
 function getSentiment(tweets, keyword) {
   const sentimentArray = [];
-  (tweets.data).forEach((tweet) => {
-    if (!(tweet.text).trim()) {
+  tweets.data.forEach((tweet) => {
+    if (!tweet.text.trim()) {
       sentimentArray.push(0); // check if tweet is empty, if yes, neutral sentiment
     }
 
@@ -65,13 +73,13 @@ function getSentiment(tweets, keyword) {
 
     const fixedSpelling = tokenized.map((word) => spellCorrector.correct(word));
 
-    const stopWordsRemoved = stopword.removeStopwords(fixedSpelling);
+    const stopWordsRemoved = stopword.removeStopwords(tokenized);
 
     const analyzed = analyzer.getSentiment(stopWordsRemoved);
     console.log(tweet.text);
     console.log(stopWordsRemoved);
-    console.log(analyzed);
-    console.log('----------------------------------------------------');
+    console.log("Tweet sentiment number: ", analyzed);
+    console.log("----------------------------------------------------");
     sentimentArray.push(analyzed);
   });
   const sentimentNumber = caluclateSentiment(sentimentArray);
