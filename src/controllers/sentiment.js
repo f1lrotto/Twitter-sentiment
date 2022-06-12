@@ -22,26 +22,26 @@ function caluclateSentiment(sentimentArray) {
   }
   console.log(`Overall sentiment number: ${sum}`);
   if (sum >= 4) {
-    return 2;
+    return [2, sum];
   } else if (sum >= 1) {
-    return 1;
+    return [1, sum];
   } else if (sum <= -4) {
-    return -2;
+    return [-2, sum];
   } else if (sum <= -1) {
-    return -1;
+    return [-1, sum];
   } else {
-    return 0;
+    return [0, sum];
   }
 }
 
 function generateSentimentJSON(sentimentNumber, keyword) {
-  if (sentimentNumber == -1) {
+  if (sentimentNumber[0] == -1) {
     sentimentWords = `The general sentiment on twitter about ${keyword} is negative`;
-  } else if (sentimentNumber == -2) {
+  } else if (sentimentNumber[0] == -2) {
     sentimentWords = `The general sentiment on twitter about ${keyword} is very negative`;
-  } else if (sentimentNumber == 1) {
+  } else if (sentimentNumber[0] == 1) {
     sentimentWords = `The general sentiment on twitter about ${keyword} is positive`;
-  } else if (sentimentNumber == 2) {
+  } else if (sentimentNumber[0] == 2) {
     sentimentWords = `The general sentiment on twitter about ${keyword} is very positive`;
   } else {
     sentimentWords = `The general sentiment on twitter about ${keyword} is neutral`;
@@ -49,7 +49,8 @@ function generateSentimentJSON(sentimentNumber, keyword) {
 
   const JSON = {
     keyword: keyword,
-    sentiment: sentimentNumber,
+    sentiment: sentimentNumber[0],
+    sentimentPrecise: sentimentNumber[1],
     sentimentWords: sentimentWords,
   };
 
