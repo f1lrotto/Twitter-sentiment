@@ -17,9 +17,10 @@ The server listens for `GET` requests on [http://localhost:(PORT)/get-sentiment/
 When it's done, it send back a JSON similar to this:
 ```
 {
-    "keyword": "Bethesda",
+    "keyword": "Apples",
     "sentiment": 1,
-    "sentimentWords": "The general sentiment on twitter about Bethesda is positive"
+    "sentimentPrecise": 2.19708102018826,
+    "sentimentWords": "The general sentiment on twitter about Apples is positive"
 }
 ```
 ### Technologies used
