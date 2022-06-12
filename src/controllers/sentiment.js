@@ -20,7 +20,7 @@ function caluclateSentiment(sentimentArray) {
   for (let i = 0; i < sentimentArray.length; i++) {
     sum += sentimentArray[i];
   }
-
+  console.log(`Overall sentiment number: ${sum}` );
   if (sum >= 1) {
     return 1;
   } else if (sum == 0) {
@@ -30,17 +30,17 @@ function caluclateSentiment(sentimentArray) {
   }
 }
 
-function generateSentimentJSON(sentimentNumber, coin) {
+function generateSentimentJSON(sentimentNumber, keyword) {
   if (sentimentNumber == -1) {
-    sentimentWords = `The general sentiment on twitter about ${coin} is negative`;
+    sentimentWords = `The general sentiment on twitter about #${keyword} is negative`;
   } else if (sentimentNumber == 0) {
-    sentimentWords = `The general sentiment on twitter about ${coin} is neutral`;
+    sentimentWords = `The general sentiment on twitter about #${keyword} is neutral`;
   } else {
-    sentimentWords = `The general sentiment on twitter about ${coin} is positive`;
+    sentimentWords = `The general sentiment on twitter about #${keyword} is positive`;
   }
 
   const JSON = {
-    coin: coin,
+    keyword: keyword,
     sentiment: sentimentNumber,
     sentimentWords: sentimentWords,
   };
@@ -50,14 +50,14 @@ function generateSentimentJSON(sentimentNumber, coin) {
 
 // tweets is an array of tweets
 // TODO customize to the twitter API output
-function getSentiment(tweets, coin) {
+function getSentiment(tweets, keyword) {
   const sentimentArray = [];
-  tweets.forEach((tweet) => {
-    if (!tweet.trim()) {
+  (tweets.data).forEach((tweet) => {
+    if (!(tweet.text).trim()) {
       sentimentArray.push(0); // check if tweet is empty, if yes, neutral sentiment
     }
 
-    const lexed = aposToLexForm(tweet)
+    const lexed = aposToLexForm(tweet.text)
       .toLowerCase()
       .replace(/[^a-zA-Z\s]+/g, ""); // remove all characters outside of a-z/A-Z
 
@@ -68,12 +68,14 @@ function getSentiment(tweets, coin) {
     const stopWordsRemoved = stopword.removeStopwords(fixedSpelling);
 
     const analyzed = analyzer.getSentiment(stopWordsRemoved);
-
+    console.log(tweet.text);
+    console.log(stopWordsRemoved);
+    console.log(analyzed);
+    console.log('----------------------------------------------------');
     sentimentArray.push(analyzed);
   });
-
   const sentimentNumber = caluclateSentiment(sentimentArray);
-  const sentiment = generateSentimentJSON(sentimentNumber, coin);
+  const sentiment = generateSentimentJSON(sentimentNumber, keyword);
   return sentiment;
 }
 
