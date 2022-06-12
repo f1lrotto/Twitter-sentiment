@@ -22,13 +22,13 @@ function caluclateSentiment(sentimentArray) {
   }
   console.log(`Overall sentiment number: ${sum}`);
   if (sum >= 4) {
-    return 1;
-  } else if (sum >= 1) {
     return 2;
+  } else if (sum >= 1) {
+    return 1;
   } else if (sum <= -4) {
-    return -1;
-  } else if (sum <= -1) {
     return -2;
+  } else if (sum <= -1) {
+    return -1;
   } else {
     return 0;
   }
