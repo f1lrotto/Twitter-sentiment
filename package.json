@@ -1,0 +1,30 @@
+{
+  "name": "twitter-trader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f1lrotto/Twitter-trader.git"
+  },
+  "author": "Filip Hupka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/f1lrotto/Twitter-trader/issues"
+  },
+  "homepage": "https://github.com/f1lrotto/Twitter-trader#readme",
+  "dependencies": {
+    "apos-to-lex-form": "^1.0.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "natural": "^5.2.2",
+    "spelling-corrector": "^3.0.0",
+    "stopword": "^2.0.2",
+    "twitter": "^1.7.1"
+  }
+}
