@@ -1,4 +1,4 @@
-# Twitter-sentiment
+# Twitter-sentiment-API
 
 ## Introduction
 This is an API that can measure the sentiment on twitter about a certain keyword! 
